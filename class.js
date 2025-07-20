@@ -32,11 +32,11 @@ class ValidationError extends Error {
 // - static validateName(name): throw ValidationError if name is empty or shorter than 2 characters
 // ✏️ YOUR CODE HERE
 class Product {
-  #price;
+  #price = 0;
   constructor(name, price, manufacturedDate) {
     Product.validateName(name);
     this.name = name;
-    this.price = price;
+    this.#price = price;
     this.manufacturedDate = manufacturedDate;
   }
 
@@ -44,9 +44,11 @@ class Product {
     return this.#price;
   }
   set price(value) {
-    if (value < 0)
+    if (value < 0) {
       throw new ValidationError("Price cannot be a negative value");
-    this.#price = value;
+    } else {
+      this.#price = value;
+    }
   }
 
   getInfo() {
@@ -66,7 +68,7 @@ class Product {
   }
 
   static validateName(name) {
-    if (!name || name.length < 2) {
+    if (name === null || name.length < 2) {
       throw new ValidationError("Name can't be shorter than 2 characters.");
     }
   }
@@ -78,13 +80,13 @@ class Product {
 // ✏️ YOUR CODE HERE
 class LandProduct extends Product {
   getInfo() {
-    return `[Land] ${this.name} costs $${this.price}`;
+    return `[Land] ${super.getInfo()}`;
   }
 }
 
 class SeaProduct extends Product {
   getInfo() {
-    return `[Sea] ${this.name} costs $${this.price}`;
+    return `[Sea] ${super.getInfo()}`;
   }
 }
 
